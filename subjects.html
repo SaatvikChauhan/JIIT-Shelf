@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel = "icon" type = "image/svg+xml" href = "icons/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIIT Shelf - Subjects</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <header>
+        <div id="navbar">
+            <a href="index.html">
+                <h1 id="brand">JIIT <span class="to-accent">Shelf</span></h1>
+            </a>
+            <div id="nav-options">
+                <div class="tools">
+                    <button id="tools-primary">Tools<i data-lucide="chevron-down" class="chevron-icon icon-dim"></i>
+                    </button>
+                    <div class="tools-secondary">
+                        <!-- <a href="cgcalc.html" target="_blank">CGPA Calculator</a> -->
+                        <a href="cgest.html" target="_blank">SGPA Estimator</a>
+                        <!-- Add more tools later -->
+                    </div>
+                </div>
+
+                <div id="theme-toggle">
+                    <i data-lucide="sun-medium" id="theme-toggle-icon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-padding">
+        <div class="page-header">
+            <button class="change" onclick="window.location.href='index.html'">← Change</button>
+            <h2 class="branch-sem"></h2>
+        </div>
+        
+        <div class="subject-list"></div>
+
+    </section>
+
+    <script src="js/data.js"></script>
+    <script src = "js/main.js"></script>
+    <script src="js/subjects.js"></script>
+</body>
+
+</html>

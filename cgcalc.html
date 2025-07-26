@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel = "icon" type = "image/svg+xml" href = "icons/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIIT Shelf - CGPA Calculator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <header>
+        <div id="navbar">
+            <a href="index.html">
+                <h1 id="brand">JIIT <span class="to-accent">Shelf</span></h1>
+            </a>
+            <div id="nav-options">
+                <div class="tools">
+                    <button id="tools-primary">Tools<i data-lucide="chevron-down" class="chevron-icon icon-dim"></i>
+                    </button>
+                    <div class="tools-secondary">
+                        <a href="cgcalc.html" target="_blank">CGPA Calculator</a>
+                        <a href="cgest.html" target="_blank">CGPA Estimator</a>
+                        <!-- Add more tools later -->
+                    </div>
+                </div>
+
+                <div id="theme-toggle">
+                    <i data-lucide="sun-medium" id="theme-toggle-icon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="page-padding">
+        <section id="cgpa-calculator">
+            <h2 class="section-heading">CGPA Calculator</h2>
+            <p class="section-subtext">Find the SGPA you need this semester to achieve your target score!</p>
+
+            <form id="cgpa-form">
+                <!-- Current Semester Selector -->
+                <div class="form-group">
+                    <label for="current-sem">Current Semester:</label>
+                    <select id="current-sem" required>
+                        <option value="" disabled selected>Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+
+                <!-- Dynamic Previous Semesters Input -->
+                <div id="previous-sems-container"></div>
+
+                <!-- Current Semester Credits -->
+                <div class="form-group">
+                    <label for="current-credits">Current Semester Credits:</label>
+                    <input type="number" id="current-credits" step="0.5" min="1" required>
+                </div>
+
+                <!-- Target CGPA -->
+                <div class="form-group">
+                    <label for="target-cgpa">Target CGPA:</label>
+                    <input type="number" id="target-cgpa" step="0.01" min="0" max="10" required>
+                </div>
+
+                <button type="submit" class="calculate-btn">Calculate</button>
+            </form>
+
+            <div id="cgpa-result"></div>
+        </section>
+    </main>
+    <script src="js/cgCalc.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/data.js"></script>
+</body>
+
+</html>

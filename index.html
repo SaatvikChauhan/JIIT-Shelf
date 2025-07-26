@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="JIITShelf" />
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIIT Shelf</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <header>
+        <div id="navbar">
+            <a href="index.html">
+                <h1 id="brand">JIIT <span class="to-accent">Shelf</span></h1>
+            </a>
+            <div id="nav-options">
+                <div class="tools">
+                    <button id="tools-primary">Tools<i data-lucide="chevron-down" class="chevron-icon icon-dim"></i>
+                    </button>
+                    <div class="tools-secondary">
+                        <!-- <a href="cgcalc.html" target="_blank">CGPA Calculator</a> -->
+                        <a href="cgest.html" target="_blank">SGPA Estimator</a>
+                        <!-- Add more tools later -->
+                    </div>
+                </div>
+
+                <div id="theme-toggle">
+                    <i data-lucide="sun-medium" id="theme-toggle-icon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section id="hero">
+        <div id="hero-1">
+            <h1 class="heading">All your JIIT study material,<br>One <span class="to-accent">Shelf.</span></h1>
+            <p id="small-para">Tired of hunting through Classrooms and Drive folders? Find all your resources —
+                organized, accessible, and in one place.</p>
+        </div>
+        <div id="hero-2">
+            <form id="cta">
+                <div class="form-item">
+                    <div>Branch</div>
+                    <select id="branch-select" class="cta-select" name="branch" required>
+                        <option value="" disabled selected hidden>Select Branch</option>
+                        <option value="CSE">CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option value="IT">IT</option>
+                        <option value="MnC">Mathematics and Computing (M&C)</option>
+                        <option value="RnAI">Robotics and Artificial Intelligence</option>
+                    </select>
+                </div>
+
+                <div class="form-item">
+                    <div>Semester</div>
+                    <select id="semester-select" class="cta-select" name="semester" required>
+                        <option value="" disabled selected hidden>Select Semester</option>
+                        <option value="" disabled>Select branch first</option>
+
+                        <!-- Add more as needed -->
+                    </select>
+                </div>
+
+                <button id="view-subjects-btn" type="submit">View Subjects</button>
+            </form>
+        </div>
+        <div id="hero-3">
+            <div id="ecw">
+                <i data-lucide="clock" class="ecw-icon"></i>
+                <h2 class="ecw-heading">T1 begins in</h2>
+                <div id="timer">
+                    <div class="time-segment">
+                        <div class="number">00</div>
+                        <div class="label">Days</div>
+                    </div>
+                    <div class="time-segment">
+                        <div class="number">00</div>
+                        <div class="label">Hours</div>
+                    </div>
+                    <div class="time-segment">
+                        <div class="number">00</div>
+                        <div class="label">Minutes</div>
+                    </div>
+                    <div class="time-segment">
+                        <div class="number">00</div>
+                        <div class="label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://drive.google.com/file/d/1SRVkiEAD3xdWSQCemtTL_eCm_tWd78eQ/view?usp=sharing" target="_blank"
+                title="Download" id="ac">
+                <i data-lucide="download" class="ac-icon"></i>
+                Academic Calendar
+            </a>
+
+        </div>
+    </section>
+    <footer id="footer">
+        <p class="footer-text">
+            Built with
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="footer-heart" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+               2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+               C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 
+               22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+            by
+            <a href="https://www.linkedin.com/in/saatvik-chauhan-918945330" target="_blank" class="footer-a">
+                Saatvik Chauhan
+            </a>
+        </p>
+        <a href="https://github.com" target="_blank" class="footer-github">
+            <i data-lucide="github" class="icon-dim"></i>
+        </a>
+
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/countdown.js"></script>
+</body>
+
+</html>

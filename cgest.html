@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel = "icon" type = "image/svg+xml" href = "icons/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIIT Shelf - SGPA Estimator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <header>
+        <div id="navbar">
+            <a href="index.html">
+                <h1 id="brand">JIIT <span class="to-accent">Shelf</span></h1>
+            </a>
+            <div id="nav-options">
+                <div class="tools">
+                    <button id="tools-primary">Tools<i data-lucide="chevron-down" class="chevron-icon icon-dim"></i>
+                    </button>
+                    <div class="tools-secondary">
+                        <!-- <a href="cgcalc.html" target="_blank">CGPA Calculator</a> -->
+                        <a href="cgest.html" target="_blank">SGPA Estimator</a>
+                        <!-- Add more tools later -->
+                    </div>
+                </div>
+
+                <div id="theme-toggle">
+                    <i data-lucide="sun-medium" id="theme-toggle-icon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="page-padding">
+        <div id = "estimator-header" class="page-header">
+            <a href="index.html" class="change">← Home</a>
+            <h2 id = "estimator-heading" class="branch-sem">SGPA Estimator</h2>
+        </div>
+
+        <p class="estimator-description">
+            Estimate your semester SGPA based on your obtained marks till now. Just select your branch and semester,
+            enter your marks, and see your likely SGPA.
+        </p>
+
+        <div id="estimator-main">
+            <form id="cta" style="align-self: center;">
+                <div class="form-item">
+                    <div>Branch</div>
+                    <select id="branch-select" class="cta-select" name="branch" required>
+                        <option value="" disabled selected hidden>Select Branch</option>
+                        <option value="CSE">CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option value="IT">IT</option>
+                        <option value="MnC">Mathematics and Computing (M&C)</option>
+                        <option value="RnAI">Robotics and Artificial Intelligence</option>
+                    </select>
+                </div>
+
+                <div class="form-item">
+                    <div>Semester</div>
+                    <select id = "semester-select" class="cta-select" name="semester" required>
+                        <option value="" disabled selected hidden>Select Semester</option>
+                        <option value = "" disabled>Select branch first</option>
+                        
+                        <!-- Add more as needed -->
+                    </select>
+                </div>
+
+                <button id="view-subjects" type="submit" style="outline: none;">Load Subjects</button>
+            </form>
+            <div id="estimator-content" style="display: none;">
+                <p id="estimator-warning-1" class="material-disclaimer" style="width: fit-content; margin-top: 0;">
+                    <i data-lucide="circle-check-big" class="icon-detail"></i>
+                    Marks of atleast T1 are required in all subjects for SGPA Estimation.
+                </p>
+                <div id="subjects-container"></div>
+
+                <div id="calculate-section">
+                    <button id="calculate-btn">Calculate SGPA</button>
+                    <p id="estimator-warning" class="material-disclaimer" style="display: none;"></p>
+                    <div id="sgpa-output">
+                        <h3>Estimated SGPA:</h3>
+                        <p id="sgpa-result">-</p>
+                    </div>
+                    <div id="estimator-disclaimer" class="material-disclaimer" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/cgEst.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/data.js"></script>
+</body>
+
+</html>
