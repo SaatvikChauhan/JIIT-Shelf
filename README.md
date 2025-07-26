@@ -6,16 +6,16 @@
 
 ## 🚀 Features
 
-- 🎓 Study Material Access  
+- 🎓 Study Material Access<br>
   Get organized lectures, PYQs, tutorials, and reference content.
 
-- 🧮 SGPA Estimator Tool 
+- 🧮 SGPA Estimator Tool<br>
   Just select your branch and semester and enter your obtained marks. The tool will estimate your likely SGPA for that semester.
 
-- ⏱ Live Exam Countdown  
+- ⏱ Live Exam Countdown<br>
   Stay on top of upcoming T1, T2, and T3 exams with real-time countdowns.
 
-- 📱 Installable PWA 
+- 📱 Installable PWA<br> 
   Works offline, launches like a native app, and provides a smooth mobile experience.
 
 ---
