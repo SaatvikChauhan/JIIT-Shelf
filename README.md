@@ -7,7 +7,7 @@
 ## 🚀 Features
 
 - 🎓 Study Material Access<br>
-  Get organized lectures, PYQs, tutorials, and reference content.
+  Get organized lectures, PYQs, tutorials, and reference content for your selected branch and semester.
 
 - 🧮 SGPA Estimator Tool<br>
   Just select your branch and semester and enter your obtained marks. The tool will estimate your likely SGPA for that semester.
