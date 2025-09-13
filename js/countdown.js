@@ -36,4 +36,4 @@ function startExamCountdown(targetDateStr) {
     const interval = setInterval(updateCountdown, 1000);
 }
 
-startExamCountdown("2025-08-29T09:00:00");
+startExamCountdown("2025-10-10T09:00:00");
