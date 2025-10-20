@@ -286,11 +286,12 @@ header {
 #ecw {
     background-color: var(--background-3);
     border-radius: 1rem;
-    padding: 2rem 2.5rem;
+    /* padding: 2rem 2.5rem; */
+    padding: 1rem 1.25rem;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
-    /* width: 100%;
-    max-width: 300px; */
+    width: 100%;
+    max-width: 300px;
 }
 
 .ecw-icon {
