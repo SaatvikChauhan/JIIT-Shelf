@@ -30,8 +30,8 @@ function applyTheme(theme) {
   if (theme === "light") {
     root.style.setProperty('--background', 'hsla(0, 0%, 98%, 1)');
     root.style.setProperty('--foreground', 'hsla(240, 10%, 4%, 1)');
-    // root.style.setProperty('--accent', 'rgba(99, 102, 241, 1)');
-    root.style.setProperty('--accent', '#FFD700');
+    root.style.setProperty('--accent', 'rgba(99, 102, 241, 1)');
+    // root.style.setProperty('--accent', '#FFD700');
     root.style.setProperty('--border', 'hsla(0, 0%, 0%, 0.08)');
     root.style.setProperty('--background-2', '#f5f5f7');
     root.style.setProperty('--background-2-new', 'hsla(240, 10%, 4%, 0.05)');
@@ -43,8 +43,8 @@ function applyTheme(theme) {
   } else {
     root.style.setProperty('--background', 'hsla(240, 10%, 4%, 1)');
     root.style.setProperty('--foreground', 'hsla(0, 0%, 98%, 1)');
-    // root.style.setProperty('--accent', 'rgba(99, 102, 241, 1)');
-    root.style.setProperty('--accent', '#FFD700');
+    root.style.setProperty('--accent', 'rgba(99, 102, 241, 1)');
+    // root.style.setProperty('--accent', '#FFD700');
     root.style.setProperty('--border', 'hsla(0, 0%, 98%, 0.2)');
     root.style.setProperty('--background-2', '#1a1b1f');
     root.style.setProperty('--background-2-new', '#1a1b1f');
