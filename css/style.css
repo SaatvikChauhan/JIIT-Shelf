@@ -8,7 +8,8 @@
 :root {
     --background: hsla(240, 10%, 4%, 1);
     --foreground: hsla(0, 0%, 98%, 1);
-    --accent: rgba(99, 102, 241, 1);
+    /* --accent: rgba(99, 102, 241, 1); */
+    --accent: #FFD700;
 
     --border: hsla(0, 0%, 98%, 0.2);
     --border-2: rgba(255, 255, 255, 0.08);
