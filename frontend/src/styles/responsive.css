@@ -1,0 +1,132 @@
+@media (max-width: 500px) {
+    #navbar {
+        padding: 1.2rem 1rem;
+    }
+
+    #nav-options {
+        gap: 2rem;
+    }
+
+    #brand {
+        font-size: 28.8px;
+    }
+
+    #tools-primary {
+        font-size: 0.9rem;
+    }
+
+    #theme-toggle-icon {
+        width: 1.53rem;
+        height: 1.53rem;
+    }
+
+    .tools-secondary {
+        font-size: 0.9rem;
+    }
+    .tools-secondary a {
+        padding: 0.4rem 0.6rem;
+    }
+
+    .heading {
+        font-size: 57.6px;
+    }
+
+    #small-para {
+        font-size: 14.4px;
+    }
+
+    #hero-1 {
+        padding: 2rem 2rem;
+    }
+
+    #hero-2 {
+        margin-top: 1.5rem;
+    }
+
+    .icon-dim {
+        width: 0.99rem;
+        height: 0.99rem;
+    }
+
+    .footer-github {
+        right: 1rem;
+    }
+
+    .page-padding {
+        padding: 3rem 3rem;
+    }
+    #btn-container {
+        flex-direction: column;
+    }
+    
+    .chat-change {
+        left: 0.9rem;
+        font-size: 0.8rem;
+        padding: 0.38rem 0.84rem;
+    }
+}
+
+@media (max-width: 370px) {
+    .subject-title {
+        line-height: 1.5rem;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1400px) {
+    #hero-1 {
+        max-width: 75vw;
+    }
+}
+
+@media (max-width: 799px) {
+    #hero-3 {
+        position: static;
+    }
+
+    #hero {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .change {
+        position: static;
+        margin-bottom: 1.5rem;
+    }
+
+    #estimator-heading {
+        margin-top: 1.5rem;
+    }
+    #estimator-content {
+        padding: 2rem 0;
+    }
+    #subjects-container {
+        justify-content: center;
+    }
+    #material-main {
+        margin: 0 0;
+    }
+
+    .material-disclaimer {
+        font-size: 0.81rem;
+        padding: 0.81rem 1rem;
+    }
+
+    .icon-detail {
+        width: 1.17rem;
+        height: 1.17rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    #hero-2 {
+        display: block;
+    }
+    .trending-box {
+        width: fit-content;
+        margin-top: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
