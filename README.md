@@ -12,14 +12,14 @@ The platform integrates **Google Drive API** for seamless material fetching and 
 ### 🎓 Study Material Access  
 Browse organized lectures, tutorials, previous year papers (PYQs), and reference materials for your selected **branch** and **semester**.
 
+### 💬 Community Chatrooms  
+Interactive chatrooms for juniors, seniors, and peers built using **Socket.io**. Connect with peers, share study resources, get instant help, and stay engaged with your academic community in real-time.
+
 ### 🧮 SGPA Estimator Tool  
 Quickly estimate your SGPA — just choose your branch/semester and enter your marks.
 
 ### ⏱ Live Exam Countdown  
 Track upcoming **T1**, **T2**, and **T3** exams with dynamic, real-time countdown timers.
-
-### 💬 Community Chatrooms  
-Interactive chatrooms for juniors, seniors, and peers built using **Socket.io**. Connect with peers, share study resources, get instant help, and stay engaged with your academic community in real-time.
 
 ### 📱 Installable PWA  
 Works offline, can be installed on any device, and behaves just like a native mobile/desktop app.
