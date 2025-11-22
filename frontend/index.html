@@ -28,6 +28,20 @@
         gtag("config", "G-ELGNR8GWY5");
       }
     </script>
+
+    <!-- Get latest version of the app -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then((regs) => {
+          for (const reg of regs) {
+            reg.unregister();
+          }
+          caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
+          console.log("Old service workers + caches cleared");
+        });
+      }
+    </script>
+    
   </head>
   <body>
     <div id="root"></div>
