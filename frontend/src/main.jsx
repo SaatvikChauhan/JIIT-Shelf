@@ -8,6 +8,7 @@ import "./styles/responsive.css";
 import App from "./App.jsx";
 
 const updateSW = registerSW({
+  immediate: true,
   onNeedRefresh() {
     updateSW(true);
   },
