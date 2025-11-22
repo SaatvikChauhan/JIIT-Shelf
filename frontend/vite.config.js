@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-
+      filename: "service-worker.js",
       manifest: {
         name: "JIIT Shelf",
         short_name: "JIIT Shelf",
