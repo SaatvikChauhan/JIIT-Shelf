@@ -11,6 +11,7 @@ export default defineConfig({
       manifest: {
         name: "JIIT Shelf",
         short_name: "JIIT Shelf",
+        version: Date.now().toString(),
         description: "A study material hub for JIIT students",
         start_url: "/",
         display: "standalone",
