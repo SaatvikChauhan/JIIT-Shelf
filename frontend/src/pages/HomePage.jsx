@@ -26,7 +26,7 @@ const HomePage = () => {
         </div>
 
         <div id="hero-3">
-          <ExamCountdown targetDate="2025-12-01T09:00:00" />
+          <ExamCountdown targetDate="2026-02-10T09:00:00" />
           <a
             href="https://drive.google.com/file/d/1SRVkiEAD3xdWSQCemtTL_eCm_tWd78eQ/view?usp=sharing"
             target="_blank"
