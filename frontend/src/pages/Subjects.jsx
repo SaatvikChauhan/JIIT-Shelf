@@ -34,7 +34,6 @@ const Subjects = () => {
     if (cached) {
       setSubjects(JSON.parse(cached));
       setLoading(false);
-      return; // prevent API call
     }
 
     const fetchSubjects = async () => {
