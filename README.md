@@ -43,7 +43,7 @@ Works offline, can be installed on any device, and behaves just like a native mo
 You can install **JIIT Shelf** as a PWA on most devices:
 
 ### **Android (Chrome)**
-1. Open the site: https://jiitshelf.vercel.app  
+1. Open the site: https://jiitshelf.in  
 2. Tap the **three-dot menu**.
 3. Select **"Add to Home screen"**.
 4. Confirm installation.
@@ -63,5 +63,5 @@ You can install **JIIT Shelf** as a PWA on most devices:
 
 ## 🌐 Live Demo
 
-🔗 **https://jiitshelf.vercel.app**
+🔗 **https://jiitshelf.in**
 
