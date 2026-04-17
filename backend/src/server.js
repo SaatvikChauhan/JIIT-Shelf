@@ -87,15 +87,31 @@ io.on("connection", (socket) => {
     io.to(room).emit("message_edited", updated);
   });
 
-  socket.on("delete_message", async ({ messageId, room }) => {
-    await Message.findByIdAndDelete(messageId);
-    io.to(room).emit("message_deleted", messageId);
+  socket.on("delete_message", async ({ messageId, room, requesterHandle }) => {
+    try {
+      const message = await Message.findById(messageId);
+      if (!message) return;
+
+      const ADMIN_HANDLE = process.env.ADMIN_HANDLE;
+
+      if (
+        message.senderName === requesterHandle ||
+        requesterHandle === ADMIN_HANDLE
+      ) {
+        await Message.findByIdAndDelete(messageId);
+        io.to(room).emit("message_deleted", messageId);
+      } else {
+        socket.emit("error", { message: "Not authorized to delete this message" });
+      }
+    } catch (err) {
+      console.error(err);
+    }
   });
 
   socket.on("toggle_like", async ({ messageId, clientId, room }) => {
     const msg = await Message.findById(messageId);
     if (!msg) return;
-    
+
     if (msg.likes.includes(clientId)) {
       msg.likes = msg.likes.filter((id) => id !== clientId);
     } else {

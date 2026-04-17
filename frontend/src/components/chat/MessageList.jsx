@@ -14,6 +14,7 @@ const MessageList = ({
   handleDeleteClick,
   typingUser,
   scrollRef,
+  handle,
 }) => {
   return (
     <div className="chat-messages">
@@ -42,6 +43,7 @@ const MessageList = ({
             cancelEdit={cancelEdit}
             toggleLike={toggleLike}
             handleDeleteClick={handleDeleteClick}
+            handle={handle}
           />
         ))}
 
