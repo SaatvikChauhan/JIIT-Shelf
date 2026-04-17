@@ -28,4 +28,4 @@ frontend/.env.production
 frontend/.env.development
 
 *.pid
-
+node_modules
