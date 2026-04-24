@@ -17,6 +17,7 @@ const app = express();
 app.use(cors({
   origin: [
     process.env.CLIENT_URL,
+    "jiitshelf.vercel.app",
   ],
   methods: ["GET", "POST"],
 }));
