@@ -18,6 +18,7 @@ app.use(cors({
   origin: [
     process.env.CLIENT_URL,
     "jiitshelf.vercel.app",
+    "https://jiitshelf.in",
   ],
   methods: ["GET", "POST"],
 }));
@@ -34,7 +35,11 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: [
+      process.env.CLIENT_URL,
+      "https://jiitshelf.in",
+      "https://jiitshelf.vercel.app",
+    ],
     methods: ["GET", "POST"],
   },
 });
