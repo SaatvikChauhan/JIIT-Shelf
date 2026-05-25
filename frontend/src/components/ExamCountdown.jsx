@@ -34,7 +34,7 @@ const ExamCountdown = ({ targetDate }) => {
   return (
     <div id="ecw">
       <Clock className="ecw-icon" />
-      <h2 className="ecw-heading">{finished ? "Exam Time!" : "Summer Break ends in"}</h2>
+      <h2 className="ecw-heading">{finished ? "Exam Time!" : "Summer Break"}</h2>
       <div id="timer">
         {["Days", "Hours", "Minutes", "Seconds"].map((label, i) => {
           const values = [time.days, time.hours, time.minutes, time.seconds];
