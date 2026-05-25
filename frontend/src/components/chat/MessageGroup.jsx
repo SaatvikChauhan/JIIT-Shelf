@@ -13,6 +13,7 @@ const MessageGroup = ({
   cancelEdit,
   toggleLike,
   handleDeleteClick,
+  handle,
 }) => {
   return (
     <div className="flex flex-col gap-1.5">
@@ -33,6 +34,7 @@ const MessageGroup = ({
           cancelEdit={cancelEdit}
           toggleLike={toggleLike}
           handleDeleteClick={handleDeleteClick}
+          handle={handle}
         />
       ))}
     </div>

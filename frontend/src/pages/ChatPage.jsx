@@ -160,7 +160,11 @@ const ChatPage = () => {
   };
 
   const confirmDelete = () => {
-    socket.emit("delete_message", { messageId: deleteMsgId, room });
+    socket.emit("delete_message", {
+      messageId: deleteMsgId,
+      room,
+      requesterHandle: handle,
+    });
     setShowDeleteModal(false);
     setDeleteMsgId(null);
   };
@@ -202,6 +206,7 @@ const ChatPage = () => {
           handleDeleteClick={handleDeleteClick}
           typingUser={typingUser}
           scrollRef={scrollRef}
+          handle={handle}
         />
 
         <ChatInput

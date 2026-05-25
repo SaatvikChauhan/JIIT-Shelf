@@ -13,8 +13,10 @@ const MessageItem = ({
   cancelEdit,
   toggleLike,
   handleDeleteClick,
+  handle,
 }) => {
   const isOwn = msg.senderId === clientId;
+  const isAdmin = handle === import.meta.env.VITE_ADMIN_HANDLE;
 
   return (
     <div className={`message ${isOwn ? "own" : ""}`}>
@@ -42,7 +44,7 @@ const MessageItem = ({
 
       <div className="msg-actions">
         <div>
-          {isOwn && editingMsgId !== msg._id && (
+          {(isOwn || isAdmin) && editingMsgId !== msg._id && (
             <>
               <button onClick={() => startEditing(msg)}>
                 <Pencil size={15} />

@@ -51,6 +51,13 @@ export default defineConfig({
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
+        cleanupOutdatedCaches: true,
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.mode === "navigate",
+            handler: "NetworkOnly",
+          },
+        ],
         globPatterns: ["**/*.{js,css,html,svg,png,jpg,jpeg,ico}"],
       },
 

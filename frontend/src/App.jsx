@@ -8,6 +8,9 @@ import Material from "./pages/Material";
 import SGEstimator from "./pages/SGEstimator";
 import ChatPage from "./pages/ChatPage";
 import Navbar from "./components/Navbar";
+import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Contact from "./pages/Contact";
 
 import useGaPageView from "./useGaPageView.js";
 
@@ -111,6 +114,9 @@ const App = () => {
         <Route path="/material/:folderId" element={<Material />} />
         <Route path="/sgestimator" element={<SGEstimator />} />
         <Route path="/chat/:room" element={<ChatPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </div>
   );
