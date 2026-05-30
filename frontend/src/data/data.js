@@ -22,6 +22,9 @@ export const iconMap = {
 
 export const ORDER = {
   "Lectures": 1,
+  "Lectures-T1": 1,
+  "Lectures-T2": 1,
+  "Lectures-T3": 1,
   "Tutorials": 2,
   "Assignments": 2,
   "PYQs": 3,
