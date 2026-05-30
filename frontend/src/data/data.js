@@ -25,10 +25,18 @@ export const ORDER = {
   "Lectures-T1": 1,
   "Lectures-T2": 2,
   "Lectures-T3": 3,
-  "Tutorials": 4,
-  "Assignments": 4,
-  "PYQs": 5,
-  "yt.txt": 6,
-  "Books": 7,
+
+  "Module 1": 4,
+  "Module 2": 5,
+  "Module 3": 6,
+  "Module 4": 7,
+  "Module 5": 8,
+  "Module 6": 9,
+
+  "Tutorials": 10,
+  "Assignments": 10,
+  "PYQs": 11,
+  "yt.txt": 12,
+  "Books": 13,
 };
 
