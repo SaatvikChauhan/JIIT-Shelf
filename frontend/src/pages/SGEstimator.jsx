@@ -79,7 +79,6 @@ const SGEstimator = () => {
 
     if (localStorage.getItem("selectedSemester") === "1") {
       subjects.forEach((sub) => {
-        console.log(sub.credits);
         const block = document.getElementById(`sub-${sub.code}`);
         if (!block) return;
 
@@ -110,6 +109,7 @@ const SGEstimator = () => {
       });
     } else {
       subjects.forEach((sub) => {
+        console.log(sub.credits);
         const block = document.getElementById(`sub-${sub.code}`);
         if (!block) return;
 
