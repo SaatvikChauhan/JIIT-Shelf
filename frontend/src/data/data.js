@@ -23,12 +23,12 @@ export const iconMap = {
 export const ORDER = {
   "Lectures": 1,
   "Lectures-T1": 1,
-  "Lectures-T2": 1,
-  "Lectures-T3": 1,
-  "Tutorials": 2,
-  "Assignments": 2,
-  "PYQs": 3,
-  "yt.txt": 4,
-  "Books": 5,
+  "Lectures-T2": 2,
+  "Lectures-T3": 3,
+  "Tutorials": 4,
+  "Assignments": 4,
+  "PYQs": 5,
+  "yt.txt": 6,
+  "Books": 7,
 };
 
