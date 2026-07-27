@@ -107,7 +107,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/subjects/:sem" element={<Subjects />} />
+        <Route path="/subjects/:branch/:semester" element={<Subjects />} />
         <Route path="/material/:folderId" element={<Material />} />
         <Route path="/sgestimator" element={<SGEstimator />} />
         <Route path="/chat/:room" element={<ChatPage />} />
