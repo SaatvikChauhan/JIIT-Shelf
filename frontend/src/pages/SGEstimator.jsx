@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import api from "../lib/axios.js";
-import { semIdMap } from "../data/data.js";
+import { getFolderId } from "../data/data.js"; 
 import BranchSemForm from "../components/BranchSemForm";
 import { parseSubjectName } from "../lib/utils.js";
 import { CircleCheckBig } from "lucide-react";
@@ -30,7 +30,7 @@ const SGEstimator = () => {
   };
 
   const loadSubjects = async (branch, sem) => {
-    const folderId = semIdMap[sem];
+    const folderId = getFolderId(branch, sem); 
     if (!folderId) return;
 
     setLoadingSubjects(true);
