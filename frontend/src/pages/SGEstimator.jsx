@@ -31,7 +31,10 @@ const SGEstimator = () => {
 
   const loadSubjects = async (branch, sem) => {
     const folderId = getFolderId(branch, sem); 
-    if (!folderId) return;
+    if (!folderId) {
+      toast.error(`Not available yet.`);
+      return;
+    }
 
     setLoadingSubjects(true);
     setResultsVisible(false);
