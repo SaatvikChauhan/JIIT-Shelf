@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import JoinChatModal from "./JoinChatModal.jsx";
 import { History } from "lucide-react";
 
+
 const BranchSemForm = ({ mode = "navigate", onSelect }) => {
   const navigate = useNavigate();
   const [branch, setBranch] = useState("");
