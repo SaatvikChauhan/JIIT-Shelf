@@ -12,17 +12,24 @@ export const semIdMap = {
   
   "CSE-3": "1mfEfqFWJ3NkeYmdjM1-YED0GZ9q3Qvt2",
   "CSE-4": "1A9FLeKbVnJXS3W5h9iUi2s6tvxqQdC84",
-
+  
   "ECE-3": "13XNlX0YAwTKc_LC-jregRn56-VMS3O6g",
   "ECE-4": "1fCCMB2vHFB7-rqpz9gDu9SeAVbnCfjeP",
 };
 
 export const getFolderId = (branch, semester) => {
   const semStr = String(semester);
-  // Semesters 1 and 2 share the same folders across all branches
+  
   if (semStr === "1") return semIdMap["common-1"];
   if (semStr === "2") return semIdMap["common-2"];
   
+  if (semStr === "3" || semStr === "4") {
+    const sharedGroup = ["CSE", "IT", "Mathematics and Computing (M&C)"];
+    if (sharedGroup.includes(branch)) {
+      return semIdMap[`CSE-${semStr}`] || null;
+    }
+  }
+
   return semIdMap[`${branch}-${semStr}`] || null;
 };
 
@@ -52,4 +59,3 @@ export const ORDER = {
   "yt.txt": 12,
   "Books": 13,
 };
-
