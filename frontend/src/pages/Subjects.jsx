@@ -3,16 +3,13 @@ import { useParams, useNavigate, useLocation } from "react-router";
 import Footer from "../components/Footer";
 import SubjectCard from "../components/SubjectCard";
 import api from "../lib/axios.js";
-import { semIdMap } from "../data/data.js";
+import { getFolderId } from "../data/data.js";
 import toast from "react-hot-toast";
 import { parseSubjectName } from "../lib/utils.js";
 
 const Subjects = () => {
-  const { sem } = useParams();
+  const { branch, sem } = useParams();
   const navigate = useNavigate();
-  const [branch, setBranch] = useState(
-    localStorage.getItem("selectedBranch") || ""
-  );
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,9 +23,9 @@ const Subjects = () => {
   };
 
   useEffect(() => {
-    if (!sem) return;
+    if (!sem || !branch) return;
 
-    const cacheKey = `subjects_${sem}`;
+    const cacheKey = `subjects_${branch}_${sem}`;
     const cached = localStorage.getItem(cacheKey);
 
     if (cached) {
@@ -37,12 +34,14 @@ const Subjects = () => {
     }
 
     const fetchSubjects = async () => {
-      const folderId = semIdMap[sem];
+      const folderId = getFolderId(branch, sem);
+      
       if (!folderId) {
         setSubjects([]);
         setLoading(false);
         return;
       }
+      
       try {
         const res = await api.get(`/drive/${folderId}`);
 
@@ -52,7 +51,6 @@ const Subjects = () => {
         }));
 
         setSubjects(fetchedSubjects);
-
         localStorage.setItem(cacheKey, JSON.stringify(fetchedSubjects));
       } catch (error) {
         console.error("Error fetching subjects:", error);
@@ -64,12 +62,14 @@ const Subjects = () => {
     };
 
     fetchSubjects();
-  }, [sem]);
+  }, [branch, sem]);
 
   const handleCardClick = (subject) => {
     localStorage.setItem("selectedSubject", JSON.stringify(subject));
     localStorage.setItem("sem", sem);
-    const { code, title, icon } = parseSubjectName(subject.name);
+    localStorage.setItem("selectedBranch", branch);
+    
+    const { title } = parseSubjectName(subject.name);
     api.post("/stats/subject-click", { subjectId: subject.id, title });
     navigate(`/material/${subject.id}`);
   };
@@ -82,7 +82,8 @@ const Subjects = () => {
             ← Back
           </button>
           <h2 className="branch-sem">
-            {branch} — Semester {sem}
+            {/* Decoding branch in case it was encoded in the URL */}
+            {decodeURIComponent(branch)} — Semester {sem}
           </h2>
         </div>
 
