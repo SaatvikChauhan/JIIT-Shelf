@@ -1,16 +1,29 @@
 export const branchSemMap = {
   "CSE": [1, 2, 3, 4],
-  "ECE": [1, 2],
+  "ECE": [1, 2, 3, 4],
   "IT": [1, 2, 3, 4],
   "Mathematics and Computing (M&C)": [1, 2, 3, 4],
   "Robotics and Artificial Intelligence": [1, 2],
 };
 
 export const semIdMap = {
-  "1": "1wcqXk9t5TfZjwpW2rvjBMKXwwWIrQ4ca",
-  "2": "1Rb23Q-_-hZ0NCNPNlPJ9e4px2-wikiVB",
-  "3": "1mfEfqFWJ3NkeYmdjM1-YED0GZ9q3Qvt2",
-  "4": "1A9FLeKbVnJXS3W5h9iUi2s6tvxqQdC84",
+  "common-1": "1wcqXk9t5TfZjwpW2rvjBMKXwwWIrQ4ca",
+  "common-2": "1Rb23Q-_-hZ0NCNPNlPJ9e4px2-wikiVB",
+  
+  "CSE-3": "1mfEfqFWJ3NkeYmdjM1-YED0GZ9q3Qvt2",
+  "CSE-4": "1A9FLeKbVnJXS3W5h9iUi2s6tvxqQdC84",
+
+  "ECE-3": "13XNlX0YAwTKc_LC-jregRn56-VMS3O6g",
+  "ECE-4": "1fCCMB2vHFB7-rqpz9gDu9SeAVbnCfjeP",
+};
+
+export const getFolderId = (branch, semester) => {
+  const semStr = String(semester);
+  // Semesters 1 and 2 share the same folders across all branches
+  if (semStr === "1") return semIdMap["common-1"];
+  if (semStr === "2") return semIdMap["common-2"];
+  
+  return semIdMap[`${branch}-${semStr}`] || null;
 };
 
 export const iconMap = {
