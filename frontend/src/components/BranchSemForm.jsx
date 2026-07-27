@@ -41,7 +41,7 @@ const BranchSemForm = ({ mode = "navigate", onSelect }) => {
       return;
     }
 
-    navigate(`/subjects/${semester}`);
+    navigate(`/subjects/${encodeURIComponent(branch)}/${semester}`);
   };
 
   const handleJoinChat = (e) => {
@@ -63,7 +63,7 @@ const BranchSemForm = ({ mode = "navigate", onSelect }) => {
 
   const handleGoToLastVisited = () => {
     if (lastBranch && lastSemester) {
-      navigate(`/subjects/${lastSemester}`);
+      navigate(`/subjects/${encodeURIComponent(lastBranch)}/${lastSemester}`);
     }
   };
 
