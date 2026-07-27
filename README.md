@@ -1,13 +1,13 @@
 # JIIT Shelf
 
-## 📘 Overview
+## Overview
 
 **JIIT Shelf** is a responsive **MERN** application that centralizes academic study material, exam info, and student utilities — eliminating the hassle of scattered Drive links and classroom posts. 
 The platform integrates **Google Drive API** for seamless material fetching and features **real-time community chatrooms** powered by **Socket.io**. 
 
 ---
 
-## ✨ Features
+## Features
 
 ### 🎓 Study Material Access  
 Browse organized lectures, tutorials, previous year papers (PYQs), and reference materials for your selected **branch** and **semester**.
@@ -26,7 +26,7 @@ Works offline, can be installed on any device, and behaves just like a native mo
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **MongoDB**
 - **Express.js**
