@@ -53,7 +53,7 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
-        navigateFallbackDenylist: [/^\/api\//, /^\/socket\.io\//],
+        navigateFallbackDenylist: [/^\/api\//, /^\/socket\.io\//, /^\/(?:robots\.txt|sitemap\.xml)(?:\?.*)?$/],
         globPatterns: ["**/*.{js,css,html,svg,png,jpg,jpeg,ico}"],
       },
 
