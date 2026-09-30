@@ -1,5 +1,9 @@
+export const isDriveItemList = (value) => Array.isArray(value) && value.every(
+  (item) => item && typeof item.id === "string" && typeof item.name === "string"
+);
+
 export const parseSubjectName = (fullName) => {
-  if (!fullName) {
+  if (typeof fullName !== "string" || !fullName) {
     return {
       code: "",
       title: "",
@@ -22,11 +26,13 @@ export const parseSubjectName = (fullName) => {
       .join("");
 
   const icon = toPascalCase(rawIcon);
-  const credits = Number(rawCredits);
+  const parsedCredits = Number(rawCredits);
+  const credits = Number.isFinite(parsedCredits) && parsedCredits > 0 ? parsedCredits : 0;
   return { code, title, icon, credits };
 };
 
 export function parseYouTubeText(text) {
+  if (typeof text !== "string") return [];
   const lines = text
     .split("\n")
     .map((l) => l.trim())
@@ -39,14 +45,23 @@ export function parseYouTubeText(text) {
     const link = lines[i + 1] || "";
     const logo = lines[i + 2] || "";
 
+    if (!isHttpUrl(link)) continue;
     arr.push({
       title,
       link,
-      logo,
+      logo: isHttpUrl(logo) ? logo : "",
     });
   }
 
   return arr;
+}
+
+function isHttpUrl(value) {
+  try {
+    return ["https:", "http:"].includes(new URL(value).protocol);
+  } catch {
+    return false;
+  }
 }
 
 export function extractNumber(name) {

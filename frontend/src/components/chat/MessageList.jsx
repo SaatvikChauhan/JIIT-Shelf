@@ -1,9 +1,11 @@
 import MessageGroup from "./MessageGroup";
+import Skeletons from "../Skeletons.jsx";
 
 const MessageList = ({
   groupedMessages,
   loading,
   clientId,
+  canDeleteAny = false,
   editingMsgId,
   editingText,
   setEditingText,
@@ -14,11 +16,16 @@ const MessageList = ({
   handleDeleteClick,
   typingUser,
   scrollRef,
+  scrollContainer,
+  hasOlder,
+  loadingOlder,
+  loadOlder,
 }) => {
   return (
-    <div className="chat-messages">
+    <div className="chat-messages" ref={scrollContainer}>
+      {!loading && hasOlder && <button className="view-btn secondary" onClick={loadOlder} disabled={loadingOlder}>{loadingOlder ? "Loading…" : "Load older messages"}</button>}
       {loading && (
-        <div className="loading loading-dots w-8 mx-auto my-auto"></div>
+        <Skeletons kind="messages" count={4} />
       )}
 
       {!loading && Object.keys(groupedMessages).length === 0 && (
@@ -34,6 +41,7 @@ const MessageList = ({
             dateKey={dateKey}
             msgs={msgs}
             clientId={clientId}
+            canDeleteAny={canDeleteAny}
             editingMsgId={editingMsgId}
             editingText={editingText}
             setEditingText={setEditingText}

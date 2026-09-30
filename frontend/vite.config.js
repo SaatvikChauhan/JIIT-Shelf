@@ -11,7 +11,8 @@ export default defineConfig({
       manifest: {
         name: "JIIT Shelf",
         short_name: "JIIT Shelf",
-        version: Date.now().toString(),
+        id: "/",
+        scope: "/",
         description: "A study material hub for JIIT students",
         start_url: "/",
         display: "standalone",
@@ -42,7 +43,7 @@ export default defineConfig({
           {
             src: "/screenshots/home-narrow.jpg",
             sizes: "540x1072",
-            type: "image/jpg",
+            type: "image/jpeg",
             form_factor: "narrow",
           },
         ],
@@ -51,10 +52,12 @@ export default defineConfig({
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
+        cleanupOutdatedCaches: true,
+        navigateFallbackDenylist: [/^\/api\//, /^\/socket\.io\//],
         globPatterns: ["**/*.{js,css,html,svg,png,jpg,jpeg,ico}"],
       },
 
-      includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
+      includeAssets: ["favicon.svg", "apple-touch-icon.png"],
     }),
   ],
 });

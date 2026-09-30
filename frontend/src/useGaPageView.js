@@ -7,8 +7,8 @@ export default function useGaPageView() {
   const location = useLocation();
 
   useEffect(() => {
-    if (typeof gtag !== "undefined") {
-      gtag("config", GA_ID, {
+    if (typeof window.gtag === "function") {
+      window.gtag("config", GA_ID, {
         page_path: location.pathname,
       });
     }

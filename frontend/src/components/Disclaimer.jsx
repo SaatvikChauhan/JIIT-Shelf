@@ -2,7 +2,7 @@ import { Pin } from "lucide-react";
 
 export default function Disclaimer() {
   return (
-    <div className="material-disclaimer">
+    <div className="material-disclaimer course-disclaimer">
       <Pin className="icon-detail" />
       <p>
         While every effort has been made to curate accurate and helpful

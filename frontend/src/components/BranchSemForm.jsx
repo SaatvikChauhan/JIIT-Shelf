@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { branchSemMap } from "../data/data.js";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import JoinChatModal from "./JoinChatModal.jsx";
-import { History } from "lucide-react";
+import CommunityModal from "./CommunityModal.jsx";
+import { ArrowUpRight, BookOpen, History, MessagesSquare } from "lucide-react";
+import Dropdown from "./Dropdown.jsx";
+import { readStorage, writeStorage } from "../lib/storage.js";
 
 
 const BranchSemForm = ({ mode = "navigate", onSelect }) => {
@@ -11,20 +13,12 @@ const BranchSemForm = ({ mode = "navigate", onSelect }) => {
   const [branch, setBranch] = useState("");
   const [semester, setSemester] = useState("");
   const [showChatModal, setShowChatModal] = useState(false);
-  const [lastBranch, setLastBranch] = useState("");
-  const [lastSemester, setLastSemester] = useState("");
+  const closeChatModal = useCallback(() => setShowChatModal(false), []);
+  const [lastBranch] = useState(() => readStorage("selectedBranch") || "");
+  const [lastSemester] = useState(() => readStorage("selectedSemester") || "");
 
-  useEffect(() => {
-    const b = localStorage.getItem("selectedBranch");
-    const s = localStorage.getItem("selectedSemester");
-    if (b && s) {
-      setLastBranch(b);
-      setLastSemester(s);
-    }
-  }, []);
-
-  const handleBranchChange = (e) => {
-    setBranch(e.target.value);
+  const handleBranchChange = (value) => {
+    setBranch(value);
     setSemester("");
   };
 
@@ -34,8 +28,8 @@ const BranchSemForm = ({ mode = "navigate", onSelect }) => {
       toast.error("All fields are required");
       return;
     }
-    localStorage.setItem("selectedBranch", branch);
-    localStorage.setItem("selectedSemester", semester);
+    writeStorage("selectedBranch", branch);
+    writeStorage("selectedSemester", semester);
 
     if (mode === "sg") {
       onSelect?.(branch, semester);
@@ -54,14 +48,6 @@ const BranchSemForm = ({ mode = "navigate", onSelect }) => {
     setShowChatModal(true);
   };
 
-  const handleRoomEnter = (room, handle) => {
-    localStorage.setItem("selectedBranch", branch);
-    localStorage.setItem("selectedSemester", semester);
-    localStorage.setItem("chatHandle", handle);
-    setShowChatModal(false);
-    navigate(`/chat/${room}`);
-  };
-
   const handleGoToLastVisited = () => {
     if (lastBranch && lastSemester) {
       navigate(`/subjects/${encodeURIComponent(lastBranch)}/${lastSemester}`);
@@ -71,54 +57,28 @@ const BranchSemForm = ({ mode = "navigate", onSelect }) => {
   return (
     <>
       <form id="cta" onSubmit={handleSubmit} className="self-center">
+        <div className="selector-heading"><span className="icon-tile"><BookOpen size={21} /></span><div><h2>{mode === "sg" ? "Choose your semester" : "Find your study material"}</h2><p>Your branch. Your semester. Your shelf.</p></div></div>
         <div className="form-item">
-          <div>Branch</div>
-          <select
-            id="branch-select"
-            className="cta-select"
-            value={branch}
-            onChange={handleBranchChange}
-          >
-            <option value="" disabled hidden>
-              Select Branch
-            </option>
-            {Object.keys(branchSemMap).map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
+          <label htmlFor="branch-select">Branch</label>
+          <Dropdown id="branch-select" label="Branch" value={branch} onChange={handleBranchChange}
+            placeholder="Select your branch" options={Object.keys(branchSemMap).map((name) => ({ value: name, label: name }))} />
         </div>
 
         <div className="form-item">
-          <div>Semester</div>
-          <select
-            id="semester-select"
-            className="cta-select"
-            value={semester}
-            onChange={(e) => setSemester(e.target.value)}
-            disabled={!branch}
-          >
-            <option value="" disabled hidden>
-              {branch ? "Select Semester" : "Select branch first"}
-            </option>
-            {branch &&
-              branchSemMap[branch].map((sem) => (
-                <option key={sem} value={sem}>
-                  {sem}
-                </option>
-              ))}
-          </select>
+          <label htmlFor="semester-select">Semester</label>
+          <Dropdown key={branch} id="semester-select" label="Semester" value={semester} onChange={setSemester}
+            disabled={!branch} placeholder={branch ? "Select your semester" : "Select branch first"}
+            options={(branchSemMap[branch] || []).map((sem) => ({ value: String(sem), label: `Semester ${sem}` }))} />
         </div>
 
         <div id="btn-container">
           <button type="submit" className="view-btn flex-grow">
-            View Subjects
+            View Subjects <ArrowUpRight size={17} aria-hidden="true" />
           </button>
 
           {mode !== "sg" && (
-            <button className="view-btn" onClick={handleJoinChat}>
-              Join Chat
+            <button type="button" className="view-btn secondary" onClick={handleJoinChat}>
+              <MessagesSquare size={17} aria-hidden="true" /> Join Chat
             </button>
           )}
         </div>
@@ -136,11 +96,10 @@ const BranchSemForm = ({ mode = "navigate", onSelect }) => {
       </form>
 
       {showChatModal && (
-        <JoinChatModal
-          branch={branch}
-          semester={semester}
-          onEnterChat={handleRoomEnter}
-          onClose={() => setShowChatModal(false)}
+        <CommunityModal
+          selectedBranch={branch}
+          selectedSemester={semester}
+          onClose={closeChatModal}
         />
       )}
     </>

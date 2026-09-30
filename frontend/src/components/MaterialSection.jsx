@@ -1,50 +1,51 @@
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
-import api from "../lib/axios.js";
+import { getDrive, peekDrive } from "../lib/driveCache.js";
 import { iconMap } from "../data/data.js";
 import * as Icons from "lucide-react";
-import { extractNumber } from "../lib/utils.js";
+import { isDriveItemList } from "../lib/utils.js";
+import { compareNames, materialLabel } from "../lib/materials.js";
+import Skeletons from "./Skeletons.jsx";
+import { trackEvent } from "../lib/analytics.js";
 import toast from "react-hot-toast";
 
 function MaterialSection({ type, folderId }) {
+  return <MaterialSectionContent key={folderId} type={type} folderId={folderId} />;
+}
+
+function MaterialSectionContent({ type, folderId }) {
   const [show, setShow] = useState(false);
-  const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(() => !isDriveItemList(peekDrive(folderId)));
+  const [error, setError] = useState(false);
+  const [files, setFiles] = useState(() => {
+    const cached = peekDrive(folderId);
+    return isDriveItemList(cached) ? [...cached].sort(compareNames) : [];
+  });
 
   useEffect(() => {
-    const cacheKey = `files_${folderId}`;
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached);
-        setFiles(parsed);
-      } catch (_) {}
-    }
+    const controller = new AbortController();
 
     const getFiles = async () => {
       try {
-        const res = await api.get(`/drive/${folderId}`);
-        let items = res.data || [];
+        const res = await getDrive(folderId);
+        if (controller.signal.aborted) return;
+        let items = [...res.data];
 
-        items.sort((a, b) => {
-          const numA = extractNumber(a.name);
-          const numB = extractNumber(b.name);
-
-          if (numA !== null && numB !== null) return numA - numB;
-          if (numA !== null) return -1;
-          if (numB !== null) return 1;
-
-          return a.name.localeCompare(b.name);
-        });
+        items.sort(compareNames);
 
         setFiles(items);
-        localStorage.setItem(cacheKey, JSON.stringify(items)); // save cache
       } catch (err) {
+        if (controller.signal.aborted) return;
         console.error(err);
         toast.error("Failed to get material");
+        setError(true);
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
 
     getFiles();
+    return () => controller.abort();
   }, [folderId]);
 
   const icon = iconMap[type];
@@ -52,7 +53,7 @@ function MaterialSection({ type, folderId }) {
 
   return (
     <div className="material-section">
-      <button className="material-dropdown-btn" onClick={() => setShow(!show)}>
+      <button className="material-dropdown-btn" aria-expanded={show} onClick={() => setShow(!show)}>
         <span className="material-type">
           <IconComponent className="icon-detail" /> {type}
         </span>
@@ -60,16 +61,20 @@ function MaterialSection({ type, folderId }) {
       </button>
 
       <div className={`material-content ${show ? "show" : ""}`}>
-        {files.length === 0 && <p>No content available.</p>}
+        {loading && <Skeletons count={3} />}
+        {!loading && files.length === 0 && <p>{error ? "Could not load material. Please reload the page to try again." : "No content available."}</p>}
 
-        {files.map((file, idx) => (
+        {files.map((file) => (
           <a
-            key={idx}
+            key={file.id}
             href={`https://drive.google.com/file/d/${file.id}/view`}
             className="material-link"
+            onClick={() => trackEvent("material_open")}
+            onAuxClick={(event) => { if (event.button === 1) trackEvent("material_open"); }}
             target="_blank"
+            rel="noopener noreferrer"
           >
-            {file.name}
+            <MaterialFileLabel name={file.name} isPyq={/pyq|past.*paper|previous.*year/i.test(type)} />
           </a>
         ))}
       </div>
@@ -78,3 +83,8 @@ function MaterialSection({ type, folderId }) {
 }
 
 export default MaterialSection;
+
+export function MaterialFileLabel({ name, isPyq }) {
+  const { title, type, year, credit } = materialLabel(name, isPyq);
+  return <><span className="file-type-icon" aria-label={`${type} file`}><Icons.File size={23} aria-hidden="true" /><small>{type}</small></span><span className="file-title">{title}</span><span className="material-chips">{year && <span className="material-chip"><Icons.CalendarDays size={11} />{year}</span>}{credit && <span className="material-chip credit-chip" title={`Contributed by ${credit}`}><Icons.Award size={11} />{credit}</span>}</span></>;
+}

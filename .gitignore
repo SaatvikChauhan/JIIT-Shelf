@@ -10,6 +10,9 @@ yarn-error.log*
 backend/.env
 frontend/.env.production
 frontend/.env.development
+.env
+.env.*
+!.env.example
 
 *.log
 *.local
@@ -20,3 +23,5 @@ frontend/.env.development
 .idea/
 
 *.pid
+/JIIT Shelf report.pdf
+/info

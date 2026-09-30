@@ -1,47 +1,35 @@
+import { ArrowUpRight, Code2, Download } from "lucide-react";
 import BranchSemForm from "../components/BranchSemForm";
 import TrendingSubjects from "../components/TrendingSubjects";
 import ExamCountdown from "../components/ExamCountdown";
-import Footer from "../components/Footer";
-import { Download } from "lucide-react";
 
-const HomePage = () => {
-  return (
-    <>
-      <section id="hero">
-        <div id="hero-1">
-          <h1 className="heading">
-            All your JIIT study material,
-            <br />
-            One <span className="to-accent">Shelf.</span>
-          </h1>
-          <p id="small-para">
-            Tired of hunting through Classrooms and Drive folders? Find all your
-            resources — organized, accessible, and in one place.
-          </p>
-        </div>
-
-        <div id="hero-2">
+export default function HomePage() {
+  return <>
+    <main className="home-layout" id="main-content" tabIndex={-1}>
+      <div className="home-primary">
+        <section className="shelf-hero" aria-labelledby="hero-title">
+          <h1 id="hero-title">All your JIIT study material,<br />One <span>Shelf.</span></h1>
+          <p>Tired of hunting through Classrooms and Drive folders? Find all your resources — organized, accessible, and in one place.</p>
+        </section>
+        <div className="home-action-grid" id="find-material">
           <BranchSemForm mode="navigate" />
+        </div>
+      </div>
+      <div className="home-sidebar-column">
+        <aside className="home-sidebar" aria-label="Exam countdown and popular material">
+          <div className="exam-panel">
+            <ExamCountdown />
+            <a href="https://drive.google.com/file/d/1KUMLMqzIXm_IXX9PiZX5uPDNzWZ3Ct8A/view?usp=drive_link" target="_blank" rel="noopener noreferrer" id="ac">
+              <Download size={18} aria-hidden="true" /><span>Academic Calendar</span><ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          </div>
           <TrendingSubjects />
-        </div>
-
-        <div id="hero-3">
-          <ExamCountdown targetDate="2026-10-12T09:00:00" />
-          <a
-            href="https://drive.google.com/file/d/1KUMLMqzIXm_IXX9PiZX5uPDNzWZ3Ct8A/view?usp=drive_link"
-            target="_blank"
-            title="Download"
-            id="ac"
-            rel="noopener noreferrer"
-          >
-            <Download className="ac-icon" />
-            Academic Calendar
-          </a>
-        </div>
-      </section>
-      <Footer />
-    </>
-  );
-};
-
-export default HomePage;
+        </aside>
+        <aside className="codeshelf-teaser" aria-label="CodeShelf announcement">
+          <span className="teaser-icon"><Code2 size={22} aria-hidden="true" /></span>
+          <p><strong>CodeShelf,</strong> launching soon.</p>
+        </aside>
+      </div>
+    </main>
+  </>;
+}

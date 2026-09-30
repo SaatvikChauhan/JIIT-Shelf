@@ -5,6 +5,7 @@ const SubjectClickSchema = new mongoose.Schema({
   subjectName: { type: String, required: true },
   date: { type: String, required: true },
   count: { type: Number, default: 1 },
+  semesterCounts: { type: Map, of: Number },
 });
 
 SubjectClickSchema.index({ subjectId: 1, date: 1 }, { unique: true });

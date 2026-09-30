@@ -1,5 +1,6 @@
 import { parseSubjectName } from "../lib/utils.js";
 import * as Icons from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const SubjectCard = ({ subject, onClick }) => {
   const { code, title, icon } = parseSubjectName(subject.name);
@@ -19,7 +20,7 @@ const SubjectCard = ({ subject, onClick }) => {
         </div>
       </div>
 
-      <button className="material-btn">View Material</button>
+      <button className="material-btn">View Material <ArrowUpRight size={16} aria-hidden="true" /></button>
     </div>
   );
 };

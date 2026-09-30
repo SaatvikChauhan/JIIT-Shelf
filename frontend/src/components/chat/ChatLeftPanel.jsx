@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-const ChatLeftPanel = ({ room, sem }) => {
+const ChatLeftPanel = ({ room, sem, branch }) => {
   return (
     <div className="chat-left-panel">
       <div className="left-content">
@@ -19,7 +19,7 @@ const ChatLeftPanel = ({ room, sem }) => {
           <li>Share notes/resources only if allowed by college rules.</li>
         </ul>
 
-        <Link to={`/subjects/${sem}`} className="mat-btn">
+        <Link to={branch && sem ? `/subjects/${encodeURIComponent(branch)}/${sem}` : "/"} className="view-btn chat-material-btn">
           View Your Material
         </Link>
       </div>

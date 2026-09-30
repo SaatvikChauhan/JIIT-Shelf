@@ -1,22 +1,34 @@
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
-import api from "../lib/axios.js";
+import { getDrive } from "../lib/driveCache.js";
 import { getFolderId } from "../data/data.js"; 
 import BranchSemForm from "../components/BranchSemForm";
 import { parseSubjectName } from "../lib/utils.js";
 import { CircleCheckBig } from "lucide-react";
 import toast from "react-hot-toast";
+import Skeletons from "../components/Skeletons.jsx";
+import { trackEvent } from "../lib/analytics.js";
 
 const SGEstimator = () => {
   const navigate = useNavigate();
   const [subjects, setSubjects] = useState([]);
   const [loadingSubjects, setLoadingSubjects] = useState(false);
+  const [semester, setSemester] = useState("");
 
   const [resultsVisible, setResultsVisible] = useState(false);
   const [sgpa, setSgpa] = useState(null);
   const [isLoadingResult, setIsLoadingResult] = useState(false);
 
   const subjectsRef = useRef(null);
+  const requestRef = useRef(null);
+  const scrollTimer = useRef(null);
+  const resultTimer = useRef(null);
+
+  useEffect(() => () => {
+    requestRef.current?.abort();
+    clearTimeout(scrollTimer.current);
+    clearTimeout(resultTimer.current);
+  }, []);
 
   const getGradePoint = (percentage) => {
     if (percentage >= 80) return 10;
@@ -30,32 +42,42 @@ const SGEstimator = () => {
   };
 
   const loadSubjects = async (branch, sem) => {
+    requestRef.current?.abort();
+    clearTimeout(scrollTimer.current);
+    clearTimeout(resultTimer.current);
+    const controller = new AbortController();
+    requestRef.current = controller;
+    setResultsVisible(false);
+    setIsLoadingResult(false);
+    setSubjects([]);
     const folderId = getFolderId(branch, sem); 
     if (!folderId) {
+      setLoadingSubjects(false);
       toast.error(`Not available yet.`);
       return;
     }
 
     setLoadingSubjects(true);
-    setResultsVisible(false);
 
     try {
-      const res = await api.get(`/drive/${folderId}`);
+      const res = await getDrive(folderId);
+      if (controller.signal.aborted) return;
       let parsed = res.data.map((item) => parseSubjectName(item.name));
 
-      // not considering Lab subjects
       parsed = parsed.filter((sub) => !sub.title.toLowerCase().includes("lab"));
+      setSemester(String(sem));
       setSubjects(parsed);
     } catch (err) {
+      if (controller.signal.aborted) return;
       console.error(err);
       toast.error("Failed to get subjects");
     } finally {
-      setLoadingSubjects(false);
-      setTimeout(() => {
-        if (subjectsRef.current) {
-          subjectsRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 120);
+      if (!controller.signal.aborted) {
+        setLoadingSubjects(false);
+        scrollTimer.current = setTimeout(() => {
+          subjectsRef.current?.scrollIntoView({ behavior: "smooth" });
+        }, 120);
+      }
     }
   };
 
@@ -75,12 +97,15 @@ const SGEstimator = () => {
   };
 
   const handleCalculate = () => {
+    clearTimeout(resultTimer.current);
+    setIsLoadingResult(false);
+    setResultsVisible(false);
     let totalGradePoints = 0;
     let totalCredits = 0;
     let missingT1 = false;
     let invalidMarks = false;
 
-    if (localStorage.getItem("selectedSemester") === "1") {
+    if (semester === "1") {
       subjects.forEach((sub) => {
         const block = document.getElementById(`sub-${sub.code}`);
         if (!block) return;
@@ -91,7 +116,7 @@ const SGEstimator = () => {
         const vMid = mid.value ? parseFloat(mid.value) : NaN;
         const vEnd = end.value ? parseFloat(end.value) : NaN;
 
-        if (vMid > 30 || vEnd > 40) {
+        if (vMid < 0 || vMid > 30 || vEnd < 0 || vEnd > 40) {
           invalidMarks = true;
           return;
         }
@@ -112,7 +137,6 @@ const SGEstimator = () => {
       });
     } else {
       subjects.forEach((sub) => {
-        console.log(sub.credits);
         const block = document.getElementById(`sub-${sub.code}`);
         if (!block) return;
 
@@ -126,7 +150,7 @@ const SGEstimator = () => {
         const v2 = t2.value ? parseFloat(t2.value) : NaN;
         const v3 = t3.value ? parseFloat(t3.value) : NaN;
 
-        if (v1 > 20 || v2 > 20 || v3 > 35) {
+        if (v1 < 0 || v1 > 20 || v2 < 0 || v2 > 20 || v3 < 0 || v3 > 35) {
           invalidMarks = true;
           return;
         }
@@ -163,12 +187,17 @@ const SGEstimator = () => {
       );
       return;
     }
+    if (totalCredits <= 0 || subjects.some((sub) => sub.credits <= 0)) {
+      toast.error("Subject credits are unavailable. Please reload the subjects.");
+      return;
+    }
     const sg = totalGradePoints / totalCredits;
+    trackEvent("sgpa_calculated");
     setIsLoadingResult(true);
     setResultsVisible(true);
     setSgpa(null);
 
-    setTimeout(() => {
+    resultTimer.current = setTimeout(() => {
       setIsLoadingResult(false);
       setSgpa((sg > 10 ? 10 : sg).toFixed(2));
     }, 1400);
@@ -192,14 +221,14 @@ const SGEstimator = () => {
           likely SGPA.
         </p>
 
-        <div id="estimator-main">
+        <div id="estimator-main" className={!loadingSubjects && subjects.length === 0 ? "estimator-empty" : undefined}>
           <BranchSemForm
             mode="sg"
             onSelect={(branch, sem) => loadSubjects(branch, sem)}
           />
 
           {loadingSubjects && (
-            <div className="loading loading-dots w-8 self-center"></div>
+            <Skeletons kind="estimator" count={4} />
           )}
 
           {!loadingSubjects && subjects.length > 0 && (
@@ -226,7 +255,7 @@ const SGEstimator = () => {
                         {sub.title} <span>({sub.code})</span>
                       </h3>
 
-                      {localStorage.getItem("selectedSemester") === "1" ? (
+                      {semester === "1" ? (
                         <>
                           <div className="input-group">
                             <label>
@@ -304,13 +333,13 @@ const SGEstimator = () => {
                   <div id="sgpa-output">
                     <h3>Estimated SGPA:</h3>
 
-                    <p id="sgpa-result">
+                    <div id="sgpa-result">
                       {isLoadingResult ? (
-                        <span className="loader-spinner"></span>
+                        <Skeletons kind="result" count={1} />
                       ) : (
                         sgpa
                       )}
-                    </p>
+                    </div>
                   </div>
                 )}
 

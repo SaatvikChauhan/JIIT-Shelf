@@ -5,6 +5,7 @@ const MessageGroup = ({
   dateKey,
   msgs,
   clientId,
+  canDeleteAny = false,
   editingMsgId,
   editingText,
   setEditingText,
@@ -25,6 +26,7 @@ const MessageGroup = ({
           key={msg._id}
           msg={msg}
           clientId={clientId}
+          canDeleteAny={canDeleteAny}
           editingMsgId={editingMsgId}
           editingText={editingText}
           setEditingText={setEditingText}

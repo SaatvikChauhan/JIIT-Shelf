@@ -5,6 +5,7 @@ import EditMessageBox from "./EditMessageBox";
 const MessageItem = ({
   msg,
   clientId,
+  canDeleteAny = false,
   editingMsgId,
   editingText,
   setEditingText,
@@ -43,17 +44,17 @@ const MessageItem = ({
       <div className="msg-actions">
         <div>
           {isOwn && editingMsgId !== msg._id && (
-            <>
-              <button onClick={() => startEditing(msg)}>
+              <button aria-label="Edit message" onClick={() => startEditing(msg)}>
                 <Pencil size={15} />
               </button>
-              <button onClick={() => handleDeleteClick(msg._id)}>
+          )}
+          {(isOwn || canDeleteAny) && editingMsgId !== msg._id && (
+              <button aria-label="Delete message" onClick={() => handleDeleteClick(msg._id)}>
                 <Trash2 size={15} />
               </button>
-            </>
           )}
 
-          <button onClick={() => toggleLike(msg)}>
+          <button aria-label="Like message" aria-pressed={msg.likes?.includes(clientId) || false} onClick={() => toggleLike(msg)}>
             <Heart fill="#E64E4E" strokeWidth={0} size={15} />
             {msg.likes?.length || 0}
           </button>
