@@ -9,7 +9,6 @@ import ChatHeader from "../components/chat/ChatHeader";
 import MessageList from "../components/chat/MessageList";
 import ChatInput from "../components/chat/ChatInput";
 import DeleteModal from "../components/chat/DeleteModal";
-import { isChatModerator } from "../lib/chatPermissions.js";
 
 const ChatPage = () => {
   const { room } = useParams();
@@ -37,6 +36,7 @@ const ChatRoom = ({ room, handle }) => {
   const restoreScroll = useRef(null);
   const [newMsg, setNewMsg] = useState("");
   const [typingUser, setTypingUser] = useState("");
+  const [canDeleteAny, setCanDeleteAny] = useState(false);
 
   const [editingMsgId, setEditingMsgId] = useState(null);
   const [editingText, setEditingText] = useState("");
@@ -120,7 +120,7 @@ const ChatRoom = ({ room, handle }) => {
     };
     const connected = () => {
       clearTimeout(fallback);
-      socket.emit("join_room", room);
+      socket.emit("join_room", { room, senderName: handle });
       load();
     };
     const applyUpdate = (update) => {
@@ -138,6 +138,7 @@ const ChatRoom = ({ room, handle }) => {
     const liked = edited;
     const joinErr = ({ message }) => toast.error(message);
     const disconnected = reason => {
+      setCanDeleteAny(false);
       if (reason === "io server disconnect") toast.error("Chat paused by server protection. Please wait a minute, then reload to reconnect.");
     };
 
@@ -150,6 +151,7 @@ const ChatRoom = ({ room, handle }) => {
     socket.on("message_deleted", deleted);
     socket.on("message_liked", liked);
     socket.on("join_room_error", joinErr);
+    socket.on("moderator_status", setCanDeleteAny);
     socket.on("typing", typing);
     socket.on("stop_typing", stopTyping);
     socket.on("chat_error", joinErr);
@@ -172,6 +174,7 @@ const ChatRoom = ({ room, handle }) => {
       socket.off("message_deleted", deleted);
       socket.off("message_liked", liked);
       socket.off("join_room_error", joinErr);
+      socket.off("moderator_status", setCanDeleteAny);
       socket.off("typing", typing);
       socket.off("stop_typing", stopTyping);
       socket.off("chat_error", joinErr);
@@ -273,9 +276,7 @@ const ChatRoom = ({ room, handle }) => {
 
   const confirmDelete = () => {
     if (!socket.connected) return toast.error("Chat is reconnecting. Please try again.");
-    socket.emit("delete_message", {
-      messageId: deleteMsgId, room, clientId, senderName: handle,
-    });
+    socket.emit("delete_message", { messageId: deleteMsgId, room, clientId });
     setShowDeleteModal(false);
     setDeleteMsgId(null);
   };
@@ -309,7 +310,7 @@ const ChatRoom = ({ room, handle }) => {
           hasOlder={Boolean(before)}
           loadingOlder={loadingOlder}
           loadOlder={loadOlder}
-          canDeleteAny={isChatModerator(handle)}
+          canDeleteAny={canDeleteAny}
           groupedMessages={groupedMessages}
           loading={loading}
           clientId={clientId}

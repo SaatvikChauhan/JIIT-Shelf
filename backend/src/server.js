@@ -14,7 +14,7 @@ import Message from "./models/Message.js";
 import { startClickCleanup } from "./cron/clearOldClicks.js";
 import { allowedRooms } from "./config/chatRooms.js";
 import { isNonEmptyString, isObjectId } from "./lib/validation.js";
-import { messageDeleteFilter } from "./lib/chatPermissions.js";
+import { isChatModerator, messageDeleteFilter } from "./lib/chatPermissions.js";
 import { createProtection, limiter, positiveSetting } from "./lib/protection.js";
 import { chatPayload } from "./lib/chatPayload.js";
 
@@ -128,7 +128,8 @@ io.on("connection", (socket) => {
   }, 25000);
   heartbeatBudget.unref();
 
-  socket.on("join_room", (room) => {
+  socket.on("join_room", (data) => {
+    const room = data?.room;
     if (!allowedRooms.has(room)) {
       socket.emit("join_room_error", {
         message: "You are not allowed to join this room!",
@@ -136,6 +137,8 @@ io.on("connection", (socket) => {
       return;
     }
 
+    socket.data.canModerate = isChatModerator(data?.senderName);
+    socket.emit("moderator_status", socket.data.canModerate);
     for (const joined of socket.rooms) if (joined !== socket.id) socket.leave(joined);
     socket.join(room);
   });
@@ -160,7 +163,8 @@ io.on("connection", (socket) => {
       socket.emit("chat_error", { message: "A name, sender ID, and message are required." });
       return;
     }
-    const newMsg = await Message.create({ room, senderName, senderId, content });
+    const displayName = socket.data.canModerate ? "JIIT Shelf Admin" : senderName;
+    const newMsg = await Message.create({ room, senderName: displayName, senderId, content });
     broadcast(room, "receive_message", chatPayload(newMsg));
   });
 
@@ -178,7 +182,7 @@ io.on("connection", (socket) => {
   });
 
   onChatEvent("delete_message", async (data) => {
-    const filter = messageDeleteFilter(data);
+    const filter = messageDeleteFilter(data, socket.data.canModerate === true);
     if (!filter) {
       socket.emit("chat_error", { message: "Invalid message or client ID." });
       return;
@@ -214,7 +218,8 @@ io.on("connection", (socket) => {
 
   onChatEvent("typing", ({ room, senderName }) => {
     if (!isNonEmptyString(senderName) || senderName.length > 80) return;
-    broadcast(room, "typing", { senderName }, socket.id);
+    const displayName = socket.data.canModerate ? "JIIT Shelf Admin" : senderName;
+    broadcast(room, "typing", { senderName: displayName }, socket.id);
   });
 
   onChatEvent("stop_typing", ({ room }) => {

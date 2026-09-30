@@ -5,7 +5,6 @@ import { Globe, Users, X } from "lucide-react";
 import Dropdown from "./Dropdown.jsx";
 import { branchSemMap } from "../data/data.js";
 import { readStorage, writeStorage } from "../lib/storage.js";
-import { isChatModerator } from "../lib/chatPermissions.js";
 
 export default function CommunityModal({ onClose, selectedBranch = "", selectedSemester = "" }) {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ export default function CommunityModal({ onClose, selectedBranch = "", selectedS
   }, [onClose]);
   function join(event) {
     event.preventDefault();
-    if (!handle.trim() || (handle.trim().length > 20 && !isChatModerator(handle))) return setError("Enter a handle of up to 20 characters.");
+    if (!handle.trim() || handle.trim().length > 80) return setError("Enter a handle of up to 80 characters.");
     if (room === "custom" && !validSelection) return setError("Choose your branch and semester.");
     writeStorage("chatHandle", handle.trim());
     onClose();
