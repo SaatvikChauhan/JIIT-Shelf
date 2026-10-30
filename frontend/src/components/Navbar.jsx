@@ -45,6 +45,7 @@ function NavbarContent({ theme, onToggleTheme }) {
       </nav>
       <div className="nav-utilities">
         <Link to="/stats" className="stats-nav-button" aria-label="Stats for nerds" title="Stats for nerds"><ChartNoAxesCombined size={19} aria-hidden="true" /></Link>
+        <a className="codeshelf-nav-link" href="https://codeshelf.space" target="_blank" rel="noopener noreferrer" aria-label="Visit CodeShelf (opens in a new tab)" title="CodeShelf"><img src="/codeshelf-512.png" alt="" width="34" height="34" /></a>
         <button className="theme-switch" role="switch" aria-checked={theme === "dark"} onClick={onToggleTheme} aria-label="Dark theme">
           <span className="theme-switch-thumb" /><Sun size={16} aria-hidden="true" /><Moon size={16} aria-hidden="true" />
         </button>

@@ -1,4 +1,5 @@
-import { ArrowUpRight, Code2, Download } from "lucide-react";
+import { ArrowUpRight, Download } from "lucide-react";
+import CodeShelfLaunch from "../components/CodeShelfLaunch.jsx";
 import BranchSemForm from "../components/BranchSemForm";
 import TrendingSubjects from "../components/TrendingSubjects";
 import ExamCountdown from "../components/ExamCountdown";
@@ -13,6 +14,7 @@ export default function HomePage() {
         </section>
         <div className="home-action-grid" id="find-material">
           <BranchSemForm mode="navigate" />
+          <CodeShelfLaunch />
         </div>
       </div>
       <div className="home-sidebar-column">
@@ -24,10 +26,6 @@ export default function HomePage() {
             </a>
           </div>
           <TrendingSubjects />
-        </aside>
-        <aside className="codeshelf-teaser" aria-label="CodeShelf announcement">
-          <span className="teaser-icon"><Code2 size={22} aria-hidden="true" /></span>
-          <p><strong>CodeShelf,</strong> launching soon.</p>
         </aside>
       </div>
     </main>
