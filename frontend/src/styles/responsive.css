@@ -1042,3 +1042,13 @@
 @media (min-width:951px) and (max-width:1350px) { .home-action-grid { grid-template-columns:minmax(0,1fr); } }
 @media (max-width:700px) { .home-action-grid { grid-template-columns:minmax(0,1fr); }.codeshelf-launch { padding:22px; } }
 @media (max-width:380px) { #navbar>.brand { font-size:23px; }.nav-utilities { gap:3px; }.codeshelf-nav-link { width:32px; height:32px; }.codeshelf-nav-link img { width:28px; height:28px; } }
+.codeshelf-launch-contest { padding-top:22px; border-top:1px solid var(--border); }
+.codeshelf-contest-label { color:var(--accent-text); font-size:11px; font-weight:600; }
+.codeshelf-launch-contest h3 { margin-top:8px; font-size:20px; line-height:1.3; }
+.codeshelf-contest-details { display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:16px; font-size:12px; color:var(--muted); }
+.codeshelf-contest-details>span { display:flex; align-items:center; gap:7px; }
+.codeshelf-contest-details svg { color:var(--accent-text); }
+.codeshelf-prize { display:flex; align-items:center; gap:12px; margin:20px 0; color:var(--gold); }
+.codeshelf-prize strong { display:block; font:600 28px/1.2 "Space Grotesk",sans-serif; }
+.codeshelf-prize span { display:block; margin-top:3px; color:var(--muted); font-size:12px; }
+.codeshelf-contest-cta { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:12px; text-align:center; font-size:13px; }
